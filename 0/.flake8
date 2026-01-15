@@ -1,0 +1,7 @@
+[flake8]
+# Set the strict PEP 8 line length
+max-line-length = 79
+# E203 is whitespace before ':', which Black does but Flake8 dislikes
+extend-ignore = E203
+# Don't lint the virtual environment or cache
+exclude = .git,__pycache__,venv,build,dist
