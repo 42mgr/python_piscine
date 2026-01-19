@@ -9,7 +9,6 @@ def ft_load(path: str) -> NDArray:
             if img.mode != "RGB":
                 img = img.convert("RGB")
             image_array = np.array(img)
-            print(f"The shape of the image is: {image_array.shape}")
 
             return image_array
     except (FileNotFoundError, IsADirectoryError, PermissionError):
@@ -21,8 +20,3 @@ def ft_load(path: str) -> NDArray:
     except Exception as e:
         print(f"An unexpected error happened: {e}")
         return np.array([])
-
-
-if __name__ == "__main__":
-    image = ft_load("landscape.jpg")
-    image = ft_load("error")

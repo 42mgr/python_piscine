@@ -9,10 +9,14 @@ def zoom(path: str) -> int:
         print("Error loading image. Program stops")
         return 1
 
-    print(f"The image shape is: {image.shape}")
+    print(f"The shape of image is: {image.shape}")
+    print(image)
 
     image_zoomed = image[100:500, 450:850, 0:1]
-    print(f"Shape after zooming: {image_zoomed.shape}")
+    print(
+        f"New shape after slicing: {image_zoomed.shape} or "
+        f"({image_zoomed.shape[0]}, {image_zoomed.shape[1]})"
+    )
     print(image_zoomed)
 
     try:

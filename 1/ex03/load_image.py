@@ -9,7 +9,6 @@ def ft_load(path: str) -> NDArray:
             if img.mode != "RGB":
                 img = img.convert("RGB")
             image_array = np.array(img)
-            print(f"The shape of the image is: {image_array.shape}")
 
             return image_array
     except (FileNotFoundError, IsADirectoryError, PermissionError):

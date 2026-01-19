@@ -2,7 +2,9 @@ import sys
 import ast
 
 
-def give_bmi(height: list[int | float], weight: list[int | float]) -> list[int | float]:
+def give_bmi(
+    height: list[int | float], weight: list[int | float]
+) -> list[int | float]:
     """
     returns a list of the BMIs for the provided lists
     and raises errors if necessary
@@ -30,6 +32,18 @@ def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
     return [x > limit for x in bmi]
 
 
+def do_bmi_calculation(height: list[int | float], weight: list[int | float]):
+    """
+    here the bmi is calculated and printed
+    bmi limit is asked and applied in print
+    """
+    bmi = give_bmi(height, weight)
+    limit = int(input("What is the bmi limit? "))
+    print("")
+    print(bmi, type(bmi))
+    print(apply_limit(bmi, limit))
+
+
 def main():
     """
     regular main to easier testing
@@ -49,11 +63,15 @@ def main():
             case [list() as height, list() as weight] if all(
                 isinstance(x, (int, float)) for x in height + weight
             ):
-                bmi = give_bmi(height, weight)
-                limit = int(input("What is the bmi limit? "))
-                print(bmi, type(bmi))
-                print(apply_limit(bmi, limit))
+                do_bmi_calculation(height, weight)
 
+            case []:
+                height = [2.71, 1.15]
+                weight = [165.3, 38.4]
+                print(
+                    f"No user input. Tester values will be used: \nheight = {height} \nweight = {weight}"
+                )
+                do_bmi_calculation(height, weight)
             case _:
                 raise ValueError("invalid input")
     except ValueError as e:

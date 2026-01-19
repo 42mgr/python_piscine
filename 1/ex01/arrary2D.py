@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 
 
 def slice_me(family: list, start: int, end: int) -> list:
@@ -22,14 +23,38 @@ def slice_me(family: list, start: int, end: int) -> list:
     return reshaped.tolist()
 
 
-if __name__ == "__main__":
-    family = [[23, 78.4], [2.15, 102.7], [2.10, 98.5], [1.88, 75.2]]
-
+def main(family: list):
     try:
-        user_input = input("Enter start and space: ")
+        user_input = input("Enter start and end: ")
         start, end = map(int, user_input.split())
         print(slice_me(family, start, end))
     except ValueError as e:
         print("ValueError:", e)
     except Exception as e:
         print("Error:", e)
+
+
+if __name__ == "__main__":
+
+    # Original from exercise
+    family = [[1.80, 78.4], [2.15, 102.7], [2.10, 98.5], [1.88, 75.2]]
+    #
+    # # Contains error: string
+    # family = [[23, "a"], [2.15, 102.7], [2.10, 98.5], [1.88, 75.2]]
+    # # Contains error: 0 values
+    # family = [
+    #     [23, 0],
+    #     [2.15, 0],
+    #     [2.10, 0],
+    #     [1.88, 0],
+    # ]
+    # # Contains error: unequal length (not a rectangle)
+    # family = [[23, 78.4, 23.0], [2.15, 102.7], [2.10, 98.5], [1.88, 75.2]]
+    # # Contains error: wrong dimension
+    # family = [
+    #     [[23, 78.4], [23, 78.4]],
+    #     [[23, 78.4], [23, 78.4]],
+    #     [[23, 78.4], [23, 78.4]],
+    # ]
+
+    sys.exit(main(family))

@@ -1,3 +1,4 @@
+import sys
 from PIL import Image, UnidentifiedImageError
 import numpy as np
 from numpy.typing import NDArray
@@ -5,6 +6,9 @@ from numpy.typing import NDArray
 
 def ft_load(path: str) -> NDArray:
     try:
+        # 'with' keyword - resource management: automatically handling setup
+        # and cleanup, ensuring files or connections close safely
+        # even if errors occur
         with Image.open(path) as img:
             if img.mode != "RGB":
                 img = img.convert("RGB")
@@ -23,6 +27,22 @@ def ft_load(path: str) -> NDArray:
         return np.array([])
 
 
+def main():
+    args = sys.argv[1:]
+
+    try:
+        match args:
+            case [arg]:
+                image = ft_load(arg)
+                print(image)
+            case _:
+                raise ValueError("please provide image (jpg, jpeg, png, etc)")
+    except ValueError as e:
+        print("ValueError:", e)
+        return 1
+
+    return 0
+
+
 if __name__ == "__main__":
-    image = ft_load("landscape.jpg")
-    image = ft_load("error")
+    sys.exit(main())
