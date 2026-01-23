@@ -69,7 +69,8 @@ def main():
                 height = [2.71, 1.15]
                 weight = [165.3, 38.4]
                 print(
-                    f"No user input. Tester values will be used: \nheight = {height} \nweight = {weight}"
+                    f"No user input. Tester values will be used: \n"
+                    f"height = {height} \nweight = {weight}"
                 )
                 do_bmi_calculation(height, weight)
             case _:

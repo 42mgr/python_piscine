@@ -1,3 +1,22 @@
 [tool.black]
 line-length = 79
-target-version = ['py310']
+
+[project]
+name = "py-github"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10.19"
+dependencies = [
+    "matplotlib>=3.10.8",
+    "numpy>=2.2.6",
+    "pandas>=2.3.3",
+    "pillow>=12.1.0",
+    "plotly>=6.5.2",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.1.0",
+    "flake8>=7.3.0",
+]
