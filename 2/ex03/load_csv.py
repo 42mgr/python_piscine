@@ -48,4 +48,4 @@ if __name__ == "__main__":
     # print(load("quatsch"))
     # print(load("test.csv"))
     # print(load("test"))
-    print(load("life_expectancy_years.csv"))
+    print(load("population_total.csv"))

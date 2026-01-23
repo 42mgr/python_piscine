@@ -2,10 +2,12 @@ from load_csv import load, personal_timer
 import plotly.express as px
 import pandas as pd
 
-# crtl o und crtl i!!!!
-
 
 def convert_to_number(value) -> float:
+    """
+    if number is non numeric, e.g. 30k it is
+    converted to 30_000
+    """
     if isinstance(value, (int, float)):
         return float(value)
 
@@ -22,6 +24,9 @@ def convert_to_number(value) -> float:
 
 
 def prepare_data(data: pd.DataFrame):
+    """
+    converts everything from vertical to horizontal layout
+    """
     df_long = data.melt(
         id_vars=["country"],
         var_name="Year",
@@ -37,15 +42,17 @@ def prepare_data(data: pd.DataFrame):
 
 @personal_timer
 def show_interactive_countries(data: pd.DataFrame):
+    """
+    creates the figure with long df
+    similar to previous exercise but now all countries can be shown
+    """
     df_long = prepare_data(data)
 
-    print(df_long.head)
-    # 2. Plot
     fig = px.line(
         df_long,
         x="Year",
         y="Population Projections",
-        color="country",  # <--- This creates the lines and the list!
+        color="country",  # makes the traces
         title="Poplulation Projections",
         template="plotly_dark",
     )
@@ -56,10 +63,14 @@ def show_interactive_countries(data: pd.DataFrame):
     fig.for_each_trace(
         lambda trace: (trace.update(visible=True) if trace.name == "Germany" else None)
     )
+    fig.for_each_trace(
+        lambda trace: (trace.update(visible=True) if trace.name == "France" else None)
+    )
     # fig.update_yaxes(range=[0, 100])
     fig.update_xaxes(tickmode="auto", nticks=12, maxallowed=2050)
     fig.update_yaxes(range=[0, None])
-    fig.show()
+    fig.write_html("result_ex02.html")
+    print("Result written to file")
 
 
 def main():

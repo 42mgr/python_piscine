@@ -2,10 +2,11 @@ from load_csv import load, personal_timer
 import plotly.express as px
 import pandas as pd
 
-# crtl o und crtl i!!!!
-
 
 def prepare_data(data: pd.DataFrame):
+    """
+    changes the data from horizontal to vertical
+    """
     df_long = data.melt(
         id_vars=["country"], var_name="Year", value_name="Life Expectancy"
     )
@@ -14,52 +15,29 @@ def prepare_data(data: pd.DataFrame):
 
 
 def show_interactive_countries(data: pd.DataFrame):
+    """
+    creates the figure with the prepared data
+    """
     df_long = prepare_data(data)
 
-    # 2. Plot
     fig = px.line(
         df_long,
         x="Year",
         y="Life Expectancy",
-        color="country",  # <--- This creates the lines and the list!
+        color="country",  # makes the line, called trace
         title="World Life Expectancy",
         template="plotly_dark",
     )
-
-    # 3. Clean up the hover labels explicitly (optional, but good practice)
     fig.update_traces(hovertemplate="<b>%{y:.1f} years</b><br>Year: %{x}")
-    # Hide everyone initially...
+
+    # hides all traces and makes Germany visible
     fig.for_each_trace(lambda trace: trace.update(visible=False))
-
-    # ...except Germany (make sure the string matches your CSV exactly!)
     fig.for_each_trace(
-        lambda trace: (
-            trace.update(visible=True) if trace.name == "Germany" else None
-        )
-    )
-    fig.show()
-
-
-@personal_timer
-def show_country(data: pd.DataFrame, country: str):
-    country_data = data[data["country"] == country]
-    if country_data.empty:
-        print(f"Country not found: {country}")
-        return
-    country_data = country_data.drop(columns=["country"])
-
-    fig = px.line(
-        x=country_data.columns,
-        y=country_data.values[0],
-        title=f"Life Expectancy: {country}",
-        markers=True,
-        template="plotly_dark",
+        lambda trace: (trace.update(visible=True) if trace.name == "Germany" else None)
     )
 
-    fig.update_layout(xaxis_title="Year", yaxis_title="Life Expectancy")
-    fig.update_yaxes(range=[0, 100])
-    fig.update_xaxes(tickmode="auto", nticks=12)
-    fig.show()
+    fig.write_html("result_ex00.html")
+    print("Wrote result to file")
 
 
 def main():
